@@ -4,6 +4,7 @@ appCompat = "1.4.1"
 constraintLayout = "2.1.4"
 material = "1.8.0"
 dagger = "2.45"
+navigation = "2.5.3"
 
 [libraries]
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
@@ -11,8 +12,11 @@ constraintLayout = { module = "androidx.constraintlayout:constraintlayout", vers
 material = { module = "com.google.android.material:material", version.ref = "material" }
 hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
+navigationFragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
+navigationUi = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradleplugin" }
 android-library = { id = "com.android.library", version.ref = "gradleplugin" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }

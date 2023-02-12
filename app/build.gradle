@@ -1,5 +1,6 @@
 plugins {
     alias libs.plugins.android.application
+    alias libs.plugins.navigation.safeargs
 }
 
 android {
@@ -42,4 +43,8 @@ dependencies {
     //Dagger Hilt
     implementation libs.hiltAndroid
     implementation libs.hiltCompiler
+
+    //Navigation
+    implementation libs.navigationFragment
+    implementation libs.navigationUi
 }
