@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.AppMarket" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/Black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/White</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
