@@ -1,6 +1,9 @@
 plugins {
-    alias libs.plugins.android.application
-    alias libs.plugins.navigation.safeargs
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -22,7 +25,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug{
+        debug {
             applicationIdSuffix = ".debug"
             debuggable = true
         }
@@ -42,7 +45,7 @@ dependencies {
 
     //Dagger Hilt
     implementation libs.hiltAndroid
-    implementation libs.hiltCompiler
+    kapt libs.hiltCompiler
 
     //Navigation
     implementation libs.navigationFragment
@@ -52,4 +55,16 @@ dependencies {
     implementation libs.lifecycleViewModel
     implementation libs.lifecycleLiveData
     implementation libs.lifecycleRuntime
+
+    //JavaX
+    implementation libs.inject
+
+    //Retrofit
+    implementation libs.retrofit
+    implementation libs.retrofitConvertorGson
+
+    //OkHttp
+    implementation libs.okHttp
+    implementation libs.okHttpBom
+    implementation libs.loggingInterceptor
 }

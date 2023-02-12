@@ -6,6 +6,8 @@ material = "1.8.0"
 dagger = "2.45"
 navigation = "2.5.3"
 lifecycleVersion = "2.5.1"
+retrofit = "2.9.0"
+okHttp = "5.0.0-alpha.11"
 
 [libraries]
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
@@ -18,9 +20,16 @@ navigationUi = { module = "androidx.navigation:navigation-ui", version.ref = "na
 lifecycleViewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
 lifecycleLiveData = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
 lifecycleRuntime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
+inject = { module = "javax.inject:javax.inject", version = "1" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofitConvertorGson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+okHttp = { module = "com.squareup.okhttp3:okhttp" }
+okHttpBom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttp" }
+loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradleplugin" }
 android-library = { id = "com.android.library", version.ref = "gradleplugin" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+kapt = { id = "kotlin-kapt" }
