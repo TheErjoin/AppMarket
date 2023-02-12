@@ -1,0 +1,14 @@
+[versions]
+gradleplugin = "7.4.0"
+appcompat = "1.4.1"
+constraintLayout = "2.1.4"
+material = "1.8.0"
+
+[libraries]
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "gradleplugin" }
+android-library = { id = "com.android.library", version.ref = "gradleplugin" }
