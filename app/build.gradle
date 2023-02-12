@@ -47,4 +47,9 @@ dependencies {
     //Navigation
     implementation libs.navigationFragment
     implementation libs.navigationUi
+
+    //Lifecycle and ViewModel
+    implementation libs.lifecycleViewModel
+    implementation libs.lifecycleLiveData
+    implementation libs.lifecycleRuntime
 }

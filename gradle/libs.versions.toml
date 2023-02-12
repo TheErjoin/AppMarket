@@ -5,6 +5,7 @@ constraintLayout = "2.1.4"
 material = "1.8.0"
 dagger = "2.45"
 navigation = "2.5.3"
+lifecycleVersion = "2.5.1"
 
 [libraries]
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
@@ -14,6 +15,9 @@ hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "dagger
 hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 navigationFragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
 navigationUi = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
+lifecycleViewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
+lifecycleLiveData = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
+lifecycleRuntime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradleplugin" }
