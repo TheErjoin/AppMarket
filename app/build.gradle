@@ -33,7 +33,13 @@ android {
 }
 
 dependencies {
-    implementation libs.appcompat
+
+    //UI Components
+    implementation libs.appCompat
     implementation libs.material
     implementation libs.constraintLayout
+
+    //Dagger Hilt
+    implementation libs.hiltAndroid
+    implementation libs.hiltCompiler
 }
