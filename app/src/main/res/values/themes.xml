@@ -12,7 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/White</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:colorEdgeEffect">@color/Ripple</item>
         <!-- Customize your theme here. -->
+
+        <!--Dark Mode-->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <!-- Splash Screen-->
