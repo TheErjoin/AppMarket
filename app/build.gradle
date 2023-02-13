@@ -67,4 +67,8 @@ dependencies {
     implementation libs.okHttp
     implementation libs.okHttpBom
     implementation libs.loggingInterceptor
+
+    //Core
+    implementation libs.core
+    implementation libs.coreSplashScreen
 }

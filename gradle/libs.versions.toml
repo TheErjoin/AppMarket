@@ -1,5 +1,5 @@
 [versions]
-gradleplugin = "7.4.0"
+gradleplugin = "7.4.1"
 appCompat = "1.4.1"
 constraintLayout = "2.1.4"
 material = "1.8.0"
@@ -8,6 +8,8 @@ navigation = "2.5.3"
 lifecycleVersion = "2.5.1"
 retrofit = "2.9.0"
 okHttp = "5.0.0-alpha.11"
+core = "1.9.0"
+coreSplashScreen = "1.0.0"
 
 [libraries]
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
@@ -26,6 +28,8 @@ retrofitConvertorGson = { module = "com.squareup.retrofit2:converter-gson", vers
 okHttp = { module = "com.squareup.okhttp3:okhttp" }
 okHttpBom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttp" }
 loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
+core = { module = "androidx.core:core", version.ref = "core" }
+coreSplashScreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashScreen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradleplugin" }
