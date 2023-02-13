@@ -48,10 +48,11 @@ public class AppsFragment extends Fragment implements AppsAdapter.OnClickItem {
         apps.add("AppMarket");
         apps.add("AppMarket");
         apps.add("AppMarket");
+        adapter.setApps(apps);
     }
 
     private void initRecycler() {
-        adapter = new AppsAdapter(apps, this);
+        adapter = new AppsAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerApps.setLayoutManager(layoutManager);
         binding.recyclerApps.setAdapter(adapter);

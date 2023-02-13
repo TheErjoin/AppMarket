@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appmarket.databinding.ItemAppBinding;
 import com.example.appmarket.presentation.ui.utils.AppsDiffUtilCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder> {
 
-    private List<String> apps;
+    private final ArrayList<String> apps = new ArrayList<>();
 
-    private OnClickItem click;
+    private final OnClickItem click;
 
-    public AppsAdapter(List<String> apps, OnClickItem click) {
-        this.apps = apps;
+    public AppsAdapter(OnClickItem click) {
         this.click = click;
     }
 
