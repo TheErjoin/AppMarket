@@ -57,12 +57,13 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         public AppsViewHolder(ItemAppBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
-
             itemView.getRoot().setOnClickListener(view -> click.onClickItem(apps.get(getLayoutPosition())));
         }
 
         public void onBind(String s) {
+            String position = String.valueOf(getLayoutPosition() + 1);
             binding.textAppName.setText(s);
+            binding.textCountApp.setText(position);
         }
     }
 
