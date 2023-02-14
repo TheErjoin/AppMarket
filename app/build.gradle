@@ -24,15 +24,30 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField(
+                    "String",
+                    "BASE_URL",
+                    "\"http://update.paymob.ru:9996/\""
+            )
         }
         debug {
             applicationIdSuffix = ".debug"
             debuggable = true
+
+            buildConfigField(
+                    "String",
+                    "BASE_URL",
+                    "\"http://update.paymob.ru:9996/\""
+            )
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+    }
+    viewBinding {
+        enabled = true
     }
 }
 
@@ -71,4 +86,7 @@ dependencies {
     //Core
     implementation libs.core
     implementation libs.coreSplashScreen
+
+    //Glide
+    implementation libs.glide
 }

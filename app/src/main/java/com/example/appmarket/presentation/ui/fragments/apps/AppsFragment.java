@@ -1,38 +1,76 @@
 package com.example.appmarket.presentation.ui.fragments.apps;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.appmarket.R;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class AppsFragment extends Fragment {
+import com.example.appmarket.common.base.BaseFragment;
+import com.example.appmarket.databinding.FragmentAppsBinding;
+import com.example.appmarket.domain.models.AppModel;
+import com.example.appmarket.presentation.ui.adapters.AppsAdapter;
 
-    private AppsViewModel mViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
-    public static AppsFragment newInstance() {
-        return new AppsFragment();
+@AndroidEntryPoint
+public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements AppsAdapter.OnClickItem {
+
+    private AppsAdapter adapter;
+    private AppsViewModel viewModel;
+
+    @Override
+    protected FragmentAppsBinding bind() {
+        return FragmentAppsBinding.inflate(getLayoutInflater());
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_apps, container, false);
+    protected void setupUI() {
+        initViewModel();
+        initRecycler();
+    }
+
+    private void initViewModel() {
+        viewModel = new ViewModelProvider(requireActivity()).get(AppsViewModel.class);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AppsViewModel.class);
-        // TODO: Use the ViewModel
+    protected void setupObservers() {
+        observeApps();
     }
 
+    private void observeApps() {
+        viewModel.fetchApps();
+        viewModel.liveData.observe(this, listResource -> {
+            switch (listResource.statusNetwork) {
+                case SUCCESS:
+                    adapter.setApps(listResource.data);
+                    binding.progressApps.setVisibility(View.GONE);
+                    break;
+                case ERROR:
+                    Toast.makeText(requireContext(), listResource.msg, Toast.LENGTH_SHORT).show();
+                    binding.progressApps.setVisibility(View.GONE);
+                    break;
+                case LOADING:
+                    binding.progressApps.setVisibility(View.VISIBLE);
+                    break;
+            }
+        });
+    }
+
+    @Override
+    protected void setupListeners() {
+    }
+
+    private void initRecycler() {
+        adapter = new AppsAdapter(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        binding.recyclerApps.setLayoutManager(layoutManager);
+        binding.recyclerApps.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClickItem(AppModel model) {
+        Toast.makeText(requireContext(), model.getTitle(), Toast.LENGTH_SHORT).show();
+    }
 }

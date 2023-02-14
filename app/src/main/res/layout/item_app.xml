@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="12dp"
+    android:background="?selectableItemBackground"
+    android:gravity="center|start"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/text_count_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/Black"
+        android:textSize="14sp"
+        tools:text="1" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_app_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="12dp">
+
+        <ImageView
+            android:id="@+id/image_app_logo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="@null"
+            tools:src="@drawable/ic_launcher_background" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/Black"
+            android:textSize="16sp"
+            tools:text="AppMarket" />
+
+        <TextView
+            android:id="@+id/text_app_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/Black"
+            android:textSize="14sp"
+            tools:text="Install" />
+
+    </LinearLayout>
+
+</LinearLayout>
