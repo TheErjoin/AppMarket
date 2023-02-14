@@ -5,10 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavAction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.viewbinding.ViewBinding;
 
@@ -34,6 +38,15 @@ public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
         setupUI();
         setupObservers();
         setupListeners();
+    }
+
+    public void navigateSafely(NavDirections directions) {
+        NavDestination currentDestination = navController.getCurrentDestination();
+        assert currentDestination != null;
+        NavAction action = currentDestination.getAction(directions.getActionId());
+        if (action != null) {
+            navController.navigate(directions);
+        }
     }
 
     protected abstract void setupListeners();

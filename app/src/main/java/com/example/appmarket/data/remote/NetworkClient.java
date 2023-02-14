@@ -1,9 +1,7 @@
 package com.example.appmarket.data.remote;
 
 
-import androidx.annotation.NonNull;
-
-import com.example.appmarket.data.remote.service.AppApiService;
+import com.example.appmarket.data.remote.api.AppApiService;
 
 import javax.inject.Inject;
 

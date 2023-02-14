@@ -18,5 +18,9 @@
         android:id="@+id/detailAppFragment"
         android:name="com.example.appmarket.presentation.ui.fragments.apps.detail.DetailAppFragment"
         android:label="fragment_detail_app"
-        tools:layout="@layout/fragment_detail_app" />
+        tools:layout="@layout/fragment_detail_app">
+        <argument
+            android:name="appModel"
+            app:argType="com.example.appmarket.domain.models.AppModel" />
+    </fragment>
 </navigation>

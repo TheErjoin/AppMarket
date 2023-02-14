@@ -2,7 +2,9 @@ package com.example.appmarket.domain.models;
 
 import com.example.appmarket.common.utils.Status;
 
-public class AppModel {
+import java.io.Serializable;
+
+public class AppModel implements Serializable {
 
     private String link;
     private String version;
