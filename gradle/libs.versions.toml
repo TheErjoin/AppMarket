@@ -10,6 +10,7 @@ retrofit = "2.9.0"
 okHttp = "5.0.0-alpha.11"
 core = "1.9.0"
 coreSplashScreen = "1.0.0"
+glideVersion = "4.14.2"
 
 [libraries]
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
@@ -30,6 +31,7 @@ okHttpBom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttp"
 loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 core = { module = "androidx.core:core", version.ref = "core" }
 coreSplashScreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashScreen" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradleplugin" }

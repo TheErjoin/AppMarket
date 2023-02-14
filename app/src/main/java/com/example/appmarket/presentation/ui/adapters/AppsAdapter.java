@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.appmarket.databinding.ItemAppBinding;
 import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.presentation.ui.utils.AppsDiffUtilCallback;
@@ -65,6 +66,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
             String position = String.valueOf(getLayoutPosition() + 1);
             binding.textAppName.setText(model.getTitle());
             binding.textCountApp.setText(position);
+            Glide.with(itemView.getContext()).load(model.getLogo50Link()).into(binding.imageAppLogo);
         }
     }
 

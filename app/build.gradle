@@ -86,4 +86,7 @@ dependencies {
     //Core
     implementation libs.core
     implementation libs.coreSplashScreen
+
+    //Glide
+    implementation libs.glide
 }
