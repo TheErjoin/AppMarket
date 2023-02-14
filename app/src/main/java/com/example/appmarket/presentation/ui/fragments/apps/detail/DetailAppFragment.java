@@ -1,8 +1,8 @@
 package com.example.appmarket.presentation.ui.fragments.apps.detail;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -49,24 +49,21 @@ public class DetailAppFragment extends BaseFragment<FragmentDetailAppBinding> {
         switch (args.getAppModel().getStatus()) {
             case canInstalled:
                 binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.canInstalled));
-                binding.buttonInstallDetailApp.setOnClickListener(view -> {
-                    DownloadUtils.downloadStart(args.getAppModel(), requireContext());
-                });
+                binding.buttonInstallDetailApp.setOnClickListener(view -> DownloadUtils.downloadStart(args.getAppModel(), requireContext()));
                 break;
             case downloaded:
                 binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.downloaded));
-                binding.buttonInstallDetailApp.setOnClickListener(view -> {
-                    DownloadUtils.installApp(args.getAppModel(), requireContext());
-                });
+                binding.buttonInstallDetailApp.setOnClickListener(view -> DownloadUtils.installApp(args.getAppModel(), requireContext()));
                 break;
             case haveUpdated:
                 binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.haveUpdated));
-                binding.buttonInstallDetailApp.setOnClickListener(view -> {
-                    DownloadUtils.downloadStart(args.getAppModel(), requireContext());
-                });
+                binding.buttonInstallDetailApp.setOnClickListener(view -> DownloadUtils.downloadStart(args.getAppModel(), requireContext()));
                 break;
             case installed:
-                binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.installed));
+                binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.openApp));
+                binding.buttonDeleteDetailApp.setVisibility(View.VISIBLE);
+                binding.buttonDeleteDetailApp.setOnClickListener(view -> deleteApp(args.getAppModel()));
+                binding.buttonInstallDetailApp.setOnClickListener(view -> openApp(args.getAppModel()));
                 break;
         }
     }
@@ -78,6 +75,12 @@ public class DetailAppFragment extends BaseFragment<FragmentDetailAppBinding> {
     private void openApp(AppModel args) {
         Intent launchIntent = requireContext().getPackageManager().getLaunchIntentForPackage(args.getType());
         startActivity(launchIntent);
+    }
+
+    private void deleteApp(AppModel appModel) {
+        Uri packageURI = Uri.parse("package:" + appModel.getType());
+        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+        startActivity(uninstallIntent);
     }
 
     @Override
