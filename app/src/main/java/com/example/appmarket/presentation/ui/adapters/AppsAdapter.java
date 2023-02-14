@@ -68,16 +68,16 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(binding.imageAppLogo);
             switch (model.getStatus()) {
-                case canInstalled:
+                case CAN_INSTALLED:
                     binding.textAppStatus.setText(R.string.canInstalled);
                     break;
-                case installed:
+                case INSTALLED:
                     binding.textAppStatus.setText(R.string.installed);
                     break;
-                case downloaded:
+                case DOWNLOADED:
                     binding.textAppStatus.setText(R.string.downloaded);
                     break;
-                case haveUpdated:
+                case HAVE_UPDATED:
                     binding.textAppStatus.setText(R.string.haveUpdated);
                     break;
             }

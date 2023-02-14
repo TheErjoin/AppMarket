@@ -1,13 +1,18 @@
 package com.example.appmarket.common.base;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavAction;
 import androidx.navigation.NavController;
@@ -21,8 +26,11 @@ import com.example.appmarket.R;
 public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
 
     protected VB binding;
+
     protected abstract VB bind();
+
     protected NavController navController;
+    ActivityResultLauncher<String> requestPermissionLauncher;
 
     @Nullable
     @Override
@@ -35,9 +43,20 @@ public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupUI();
-        setupObservers();
-        setupListeners();
+        requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            if (isGranted) {
+                setupUI();
+                setupObservers();
+                setupListeners();
+            } else {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.permission_denied_always), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), requireContext().getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -56,6 +75,8 @@ public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
     }
 
     protected abstract void setupListeners();
+
     protected abstract void setupObservers();
+
     protected abstract void setupUI();
 }

@@ -23,6 +23,6 @@ public class AppsRepositoryImpl extends BaseRepository implements AppsRepository
 
     @Override
     public LiveData<Resource<List<AppModel>>> fetchApps() {
-        return getData(service.fetchApps());
+        return doRequest(service.fetchApps());
     }
 }

@@ -13,7 +13,7 @@ public class AppModel implements Serializable {
     private String logo200Link;
     private String title;
     private String description;
-    private Status status = Status.canInstalled;
+    private Status status = Status.CAN_INSTALLED;
 
     public AppModel(
             String link,

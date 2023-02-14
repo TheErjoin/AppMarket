@@ -1,7 +1,5 @@
 package com.example.appmarket.presentation.ui.fragments.apps.detail;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,7 +10,6 @@ import com.example.appmarket.R;
 import com.example.appmarket.common.base.BaseFragment;
 import com.example.appmarket.common.utils.DownloadUtils;
 import com.example.appmarket.databinding.FragmentDetailAppBinding;
-import com.example.appmarket.domain.models.AppModel;
 
 public class DetailAppFragment extends BaseFragment<FragmentDetailAppBinding> {
 
@@ -47,40 +44,29 @@ public class DetailAppFragment extends BaseFragment<FragmentDetailAppBinding> {
 
     private void clickDownloadButton() {
         switch (args.getAppModel().getStatus()) {
-            case canInstalled:
+            case CAN_INSTALLED:
                 binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.canInstalled));
                 binding.buttonInstallDetailApp.setOnClickListener(view -> DownloadUtils.downloadStart(args.getAppModel(), requireContext()));
                 break;
-            case downloaded:
+            case DOWNLOADED:
                 binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.downloaded));
                 binding.buttonInstallDetailApp.setOnClickListener(view -> DownloadUtils.installApp(args.getAppModel(), requireContext()));
                 break;
-            case haveUpdated:
+            case HAVE_UPDATED:
                 binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.haveUpdated));
                 binding.buttonInstallDetailApp.setOnClickListener(view -> DownloadUtils.downloadStart(args.getAppModel(), requireContext()));
                 break;
-            case installed:
+            case INSTALLED:
                 binding.buttonInstallDetailApp.setText(requireContext().getString(R.string.openApp));
                 binding.buttonDeleteDetailApp.setVisibility(View.VISIBLE);
-                binding.buttonDeleteDetailApp.setOnClickListener(view -> deleteApp(args.getAppModel()));
-                binding.buttonInstallDetailApp.setOnClickListener(view -> openApp(args.getAppModel()));
+                binding.buttonDeleteDetailApp.setOnClickListener(view -> DownloadUtils.deleteApp(args.getAppModel(), requireContext()));
+                binding.buttonInstallDetailApp.setOnClickListener(view -> DownloadUtils.openApp(args.getAppModel(), requireContext()));
                 break;
         }
     }
 
     private void clickBackButton() {
         binding.buttonArrowBackDetailApp.setOnClickListener(view -> navController.navigateUp());
-    }
-
-    private void openApp(AppModel args) {
-        Intent launchIntent = requireContext().getPackageManager().getLaunchIntentForPackage(args.getType());
-        startActivity(launchIntent);
-    }
-
-    private void deleteApp(AppModel appModel) {
-        Uri packageURI = Uri.parse("package:" + appModel.getType());
-        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-        startActivity(uninstallIntent);
     }
 
     @Override
