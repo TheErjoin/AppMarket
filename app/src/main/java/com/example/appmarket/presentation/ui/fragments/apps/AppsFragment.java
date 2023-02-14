@@ -1,8 +1,12 @@
 package com.example.appmarket.presentation.ui.fragments.apps;
 
+import android.Manifest;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -33,6 +37,7 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
     protected void setupUI() {
         initViewModel();
         initRecycler();
+        requestMemoryPermission();
     }
 
     private void initViewModel() {
@@ -101,6 +106,25 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerApps.setLayoutManager(layoutManager);
         binding.recyclerApps.setAdapter(adapter);
+    }
+
+    private void requestMemoryPermission() {
+        ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    if (isGranted) {
+                        Toast.makeText(requireContext(), "Access memory permission!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            Toast.makeText(requireContext(), "Memory permission cannot be requested again",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(requireContext(), "Memory permission denied", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
     @Override
