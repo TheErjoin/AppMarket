@@ -1,7 +1,9 @@
 package com.example.appmarket.di;
 
 import com.example.appmarket.data.repositories.AppsRepositoryImpl;
+import com.example.appmarket.data.repositories.CheckUpdateServiceRepositoryImpl;
 import com.example.appmarket.domain.repository.AppsRepository;
+import com.example.appmarket.domain.repository.CheckUpdateServiceRepository;
 
 import dagger.Binds;
 import dagger.Module;
@@ -14,5 +16,8 @@ abstract class RepositoriesModule {
 
     @Binds
     public abstract AppsRepository bindAppRepositoryImpl(AppsRepositoryImpl repository);
+
+    @Binds
+    public abstract CheckUpdateServiceRepository bindCheckUpdateServiceRepositoryImpl(CheckUpdateServiceRepositoryImpl repository);
 
 }

@@ -19,7 +19,7 @@ public class FetchAppsUseCase {
         this.repository = repository;
     }
 
-    public LiveData<Resource<List<AppModel>>> execute() {
+    public LiveData<Resource<List<AppModel>>> invoke() {
         return repository.fetchApps();
     }
 }

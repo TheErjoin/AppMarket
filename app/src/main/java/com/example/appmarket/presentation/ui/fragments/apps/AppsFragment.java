@@ -1,17 +1,15 @@
 package com.example.appmarket.presentation.ui.fragments.apps;
 
-import android.Manifest;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.appmarket.common.base.BaseFragment;
 import com.example.appmarket.common.utils.PackageUtils;
+import com.example.appmarket.common.utils.Resource;
 import com.example.appmarket.common.utils.Status;
 import com.example.appmarket.databinding.FragmentAppsBinding;
 import com.example.appmarket.domain.models.AppModel;
@@ -28,6 +26,8 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
     private AppsAdapter adapter;
     private AppsViewModel viewModel;
 
+    private Observer<Resource<List<AppModel>>> observer;
+
     @Override
     protected FragmentAppsBinding bind() {
         return FragmentAppsBinding.inflate(getLayoutInflater());
@@ -37,7 +37,6 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
     protected void setupUI() {
         initViewModel();
         initRecycler();
-        requestMemoryPermission();
     }
 
     private void initViewModel() {
@@ -51,7 +50,7 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
 
     private void observeApps() {
         viewModel.fetchApps();
-        viewModel.liveData.observe(this, listResource -> {
+        observer = listResource -> {
             switch (listResource.statusNetwork) {
                 case SUCCESS:
                     ArrayList<AppModel> updatedList = updatedAppList(listResource.data);
@@ -68,7 +67,14 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
                     }
                     break;
             }
-        });
+        };
+        viewModel.liveData.observe(this, observer);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.liveData.removeObserver(observer);
     }
 
     private ArrayList<AppModel> updatedAppList(List<AppModel> data) {
@@ -83,15 +89,17 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
     private ArrayList<AppModel> fetchStatus(AppModel model) {
         ArrayList<AppModel> list = new ArrayList<>();
         if (PackageUtils.hasAppUpdated(model, requireContext())) {
-            model.setStatus(Status.haveUpdated);
+            model.setStatus(Status.HAVE_UPDATED);
             list.add(model);
         } else if (PackageUtils.hasAppInstalled(model.getType(), requireContext())) {
-            model.setStatus(Status.installed);
+            model.setStatus(Status.INSTALLED);
             list.add(model);
+            viewModel.fetchInstalledApp(model);
         } else if (PackageUtils.hasAppDownloaded(model.getType(), requireContext())) {
-            model.setStatus(Status.downloaded);
+            model.setStatus(Status.DOWNLOADED);
+            list.add(model);
         } else {
-            model.setStatus(Status.canInstalled);
+            model.setStatus(Status.CAN_INSTALLED);
             list.add(model);
         }
         return list;
@@ -106,25 +114,6 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerApps.setLayoutManager(layoutManager);
         binding.recyclerApps.setAdapter(adapter);
-    }
-
-    private void requestMemoryPermission() {
-        ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
-                new ActivityResultContracts.RequestPermission(),
-                isGranted -> {
-                    if (isGranted) {
-                        Toast.makeText(requireContext(), "Access memory permission!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            Toast.makeText(requireContext(), "Memory permission cannot be requested again",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(requireContext(), "Memory permission denied", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-        requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
     @Override
