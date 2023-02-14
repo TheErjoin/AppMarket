@@ -13,6 +13,9 @@ import retrofit2.Response;
 
 public abstract class BaseRepository {
 
+    /**
+     * Reusable method that can be used in the future
+     */
     public <T> LiveData<Resource<T>> getData(Call<T> call) {
         MutableLiveData<Resource<T>> liveData = new MutableLiveData<>();
         liveData.setValue(Resource.loading());

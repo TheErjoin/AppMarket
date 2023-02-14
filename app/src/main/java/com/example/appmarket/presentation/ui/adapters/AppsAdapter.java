@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmarket.databinding.ItemAppBinding;
+import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.presentation.ui.utils.AppsDiffUtilCallback;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder> {
 
-    private final ArrayList<String> apps = new ArrayList<>();
+    private final ArrayList<AppModel> apps = new ArrayList<>();
 
     private final OnClickItem click;
 
@@ -41,7 +42,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         return apps.size();
     }
 
-    public void setApps(List<String> newApps) {
+    public void setApps(List<AppModel> newApps) {
         final AppsDiffUtilCallback diffCallback = new AppsDiffUtilCallback(apps, newApps);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 
@@ -60,14 +61,14 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
             itemView.getRoot().setOnClickListener(view -> click.onClickItem(apps.get(getLayoutPosition())));
         }
 
-        public void onBind(String s) {
+        public void onBind(AppModel model) {
             String position = String.valueOf(getLayoutPosition() + 1);
-            binding.textAppName.setText(s);
+            binding.textAppName.setText(model.getTitle());
             binding.textCountApp.setText(position);
         }
     }
 
     public interface OnClickItem {
-        void onClickItem(String s);
+        void onClickItem(AppModel model);
     }
 }

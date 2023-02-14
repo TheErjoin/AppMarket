@@ -1,54 +1,58 @@
 package com.example.appmarket.presentation.ui.fragments.apps;
 
 
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.appmarket.R;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.appmarket.common.base.BaseFragment;
+import com.example.appmarket.common.utils.Resource;
 import com.example.appmarket.databinding.FragmentAppsBinding;
+import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.presentation.ui.adapters.AppsAdapter;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class AppsFragment extends Fragment implements AppsAdapter.OnClickItem {
+public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements AppsAdapter.OnClickItem {
 
     private AppsAdapter adapter;
-
-    private FragmentAppsBinding binding;
-    private ArrayList<String> apps = new ArrayList<>();
+    private AppsViewModel viewModel;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = FragmentAppsBinding.inflate(inflater);
-        return binding.getRoot();
+    protected FragmentAppsBinding bind() {
+        return FragmentAppsBinding.inflate(getLayoutInflater());
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void setupUI() {
+        initViewModel();
         initRecycler();
-        listAdded();
     }
 
-    private void listAdded() {
-        apps.add("AppMarket");
-        apps.add("AppMarket");
-        apps.add("AppMarket");
-        apps.add("AppMarket");
-        apps.add("AppMarket");
-        apps.add("AppMarket");
-        apps.add("AppMarket");
-        adapter.setApps(apps);
+    private void initViewModel() {
+        viewModel = new ViewModelProvider(requireActivity()).get(AppsViewModel.class);
+    }
+
+    @Override
+    protected void setupObservers() {
+        observeApps();
+    }
+
+    private void observeApps() {
+        viewModel.fetchApps();
+        viewModel.liveData.observe(this, listResource -> {
+            switch (listResource.status) {
+                case SUCCESS:
+                    adapter.setApps(listResource.data);
+                    break;
+            }
+        });
+    }
+
+    @Override
+    protected void setupListeners() {
     }
 
     private void initRecycler() {
@@ -59,7 +63,7 @@ public class AppsFragment extends Fragment implements AppsAdapter.OnClickItem {
     }
 
     @Override
-    public void onClickItem(String s) {
-        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
+    public void onClickItem(AppModel model) {
+        Toast.makeText(requireContext(), model.getTitle(), Toast.LENGTH_SHORT).show();
     }
 }
