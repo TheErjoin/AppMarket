@@ -63,10 +63,10 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         }
 
         public void onBind(AppModel model) {
-            String position = String.valueOf(getLayoutPosition() + 1);
             binding.textAppName.setText(model.getTitle());
-            binding.textCountApp.setText(position);
+            binding.textCountApp.setText(String.valueOf(getLayoutPosition() + 1));
             Glide.with(itemView.getContext()).load(model.getLogo50Link()).into(binding.imageAppLogo);
+            binding.textAppStatus.setText("Установлено");
         }
     }
 

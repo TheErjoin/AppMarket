@@ -24,7 +24,7 @@ public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = bind();
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_graph);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         return binding.getRoot();
     }
 

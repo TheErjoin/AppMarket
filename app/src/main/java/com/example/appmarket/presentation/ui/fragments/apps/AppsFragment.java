@@ -1,20 +1,18 @@
 package com.example.appmarket.presentation.ui.fragments.apps;
 
-
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.appmarket.common.base.BaseFragment;
-import com.example.appmarket.common.utils.Resource;
 import com.example.appmarket.databinding.FragmentAppsBinding;
 import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.presentation.ui.adapters.AppsAdapter;
 
-import java.util.List;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements AppsAdapter.OnClickItem {
 
     private AppsAdapter adapter;
@@ -46,6 +44,11 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
             switch (listResource.status) {
                 case SUCCESS:
                     adapter.setApps(listResource.data);
+                    break;
+                case ERROR:
+                    Toast.makeText(requireContext(), listResource.msg, Toast.LENGTH_SHORT).show();
+                    break;
+                case LOADING:
                     break;
             }
         });
