@@ -72,20 +72,20 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
                     .load(model.getLogo50Link())
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(binding.imageAppLogo);
-//            switch (model.getStatus()) {
-//                case canInstalled:
-//                    binding.textAppStatus.setText(R.string.canInstalled);
-//                    break;
-//                case installed:
-//                    binding.textAppStatus.setText(R.string.installed);
-//                    break;
-//                case downloaded:
-//                    binding.textAppStatus.setText(R.string.downloaded);
-//                    break;
-//                case haveUpdated:
-//                    binding.textAppStatus.setText(R.string.haveUpdated);
-//                    break;
-//            }
+            switch (model.getStatus()) {
+                case canInstalled:
+                    binding.textAppStatus.setText(R.string.canInstalled);
+                    break;
+                case installed:
+                    binding.textAppStatus.setText(R.string.installed);
+                    break;
+                case downloaded:
+                    binding.textAppStatus.setText(R.string.downloaded);
+                    break;
+                case haveUpdated:
+                    binding.textAppStatus.setText(R.string.haveUpdated);
+                    break;
+            }
         }
     }
 
