@@ -40,6 +40,12 @@ public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
         setupListeners();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     public void navigateSafely(NavDirections directions) {
         NavDestination currentDestination = navController.getCurrentDestination();
         assert currentDestination != null;

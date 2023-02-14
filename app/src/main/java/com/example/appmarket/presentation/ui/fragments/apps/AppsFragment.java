@@ -112,18 +112,13 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
         ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
-                    if (isGranted) {
-                        Toast.makeText(requireContext(), "Access memory permission!", Toast.LENGTH_SHORT).show();
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Toast.makeText(requireContext(), "Memory permission cannot be requested again",
+                                Toast.LENGTH_SHORT).show();
                     } else {
-                        if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            Toast.makeText(requireContext(), "Memory permission cannot be requested again",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(requireContext(), "Memory permission denied", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(requireContext(), "Memory permission denied", Toast.LENGTH_SHORT).show();
                     }
                 });
-
         requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
