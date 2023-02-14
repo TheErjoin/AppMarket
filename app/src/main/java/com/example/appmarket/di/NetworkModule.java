@@ -1,7 +1,7 @@
 package com.example.appmarket.di;
 
 import com.example.appmarket.data.remote.NetworkClient;
-import com.example.appmarket.data.remote.service.AppApiService;
+import com.example.appmarket.data.remote.api.AppApiService;
 
 import javax.inject.Singleton;
 

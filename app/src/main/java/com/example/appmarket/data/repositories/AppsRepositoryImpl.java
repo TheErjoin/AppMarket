@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.appmarket.common.base.BaseRepository;
 import com.example.appmarket.common.utils.Resource;
-import com.example.appmarket.data.remote.service.AppApiService;
+import com.example.appmarket.data.remote.api.AppApiService;
 import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.domain.repository.AppsRepository;
 

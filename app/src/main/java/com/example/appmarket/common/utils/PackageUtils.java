@@ -3,28 +3,35 @@ package com.example.appmarket.common.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 
 import com.example.appmarket.domain.models.AppModel;
 
+import java.io.File;
 import java.util.Objects;
 
 public class PackageUtils {
 
-    public static boolean hasAppInstalled(String path, Context context) {
+    public static boolean hasAppInstalled(String packageName, Context context) {
         PackageManager packageManager = context.getPackageManager();
         try {
-            packageManager.getPackageInfo(path, PackageManager.GET_ACTIVITIES);
-            return true;
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
+            return (packageInfo != null);
         } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
-        return false;
     }
 
     public static boolean hasAppDownloaded(String path, Context context) {
         final PackageManager packageManager = context.getPackageManager();
-        String fullPath = "/storage/sdcard/Download/" + path + ".apk";
-        PackageInfo info = packageManager.getPackageArchiveInfo(fullPath, 0);
-        return info != null;
+        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(directory, path + ".apk");
+        if (file.exists()) {
+            PackageInfo info = packageManager.getPackageArchiveInfo(file.getAbsolutePath(), 0);
+            return info != null;
+        } else {
+            return false;
+        }
     }
 
     public static boolean hasAppUpdated(AppModel appModel, Context context) {
@@ -35,6 +42,7 @@ public class PackageUtils {
                 return true;
             }
         } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
         return false;
     }

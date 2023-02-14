@@ -6,6 +6,13 @@
     <string name="installed">Установлено</string>
     <string name="downloaded">Скачано</string>
     <string name="haveUpdated">Есть обновление</string>
+    <string name="downloading">Идёт скачивание</string>
     <!--endregion-->
+
+    <!--Detail App Region-->
+    <string name="delete">Удалить</string>
+    <string name="openApp">Открыть</string>
+    <!--endregion-->
+
 
 </resources>

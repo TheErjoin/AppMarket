@@ -1,4 +1,4 @@
-package com.example.appmarket.data.remote.service;
+package com.example.appmarket.data.remote.api;
 
 import com.example.appmarket.domain.models.AppModel;
 

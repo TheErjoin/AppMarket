@@ -14,6 +14,7 @@ import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.presentation.ui.adapters.AppsAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -22,8 +23,6 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
 
     private AppsAdapter adapter;
     private AppsViewModel viewModel;
-
-    private final ArrayList<AppModel> list = new ArrayList<>();
 
     @Override
     protected FragmentAppsBinding bind() {
@@ -50,10 +49,8 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
         viewModel.liveData.observe(this, listResource -> {
             switch (listResource.statusNetwork) {
                 case SUCCESS:
-                    for (AppModel app : listResource.data) {
-                        list.addAll(fetchStatus(app));
-                    }
-                    adapter.setApps(list);
+                    ArrayList<AppModel> updatedList = updatedAppList(listResource.data);
+                    adapter.setApps(updatedList);
                     binding.progressApps.setVisibility(View.GONE);
                     break;
                 case ERROR:
@@ -61,10 +58,21 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
                     binding.progressApps.setVisibility(View.GONE);
                     break;
                 case LOADING:
-                    binding.progressApps.setVisibility(View.VISIBLE);
+                    if (adapter.getItemCount() == 0) {
+                        binding.progressApps.setVisibility(View.VISIBLE);
+                    }
                     break;
             }
         });
+    }
+
+    private ArrayList<AppModel> updatedAppList(List<AppModel> data) {
+        ArrayList<AppModel> updatedList = new ArrayList<>();
+        for (AppModel app : data) {
+            List<AppModel> fetchedList = fetchStatus(app);
+            updatedList.addAll(fetchedList);
+        }
+        return updatedList;
     }
 
     private ArrayList<AppModel> fetchStatus(AppModel model) {
@@ -97,6 +105,6 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
 
     @Override
     public void onClickItem(AppModel model) {
-        Toast.makeText(requireContext(), model.getTitle(), Toast.LENGTH_SHORT).show();
+        navigateSafely(AppsFragmentDirections.Companion.actionAppsFragmentToDetailAppFragment(model));
     }
 }

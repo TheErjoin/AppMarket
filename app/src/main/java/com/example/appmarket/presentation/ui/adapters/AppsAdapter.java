@@ -1,19 +1,16 @@
 package com.example.appmarket.presentation.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.appmarket.R;
-import com.example.appmarket.common.utils.Resource;
-import com.example.appmarket.common.utils.Status;
 import com.example.appmarket.databinding.ItemAppBinding;
 import com.example.appmarket.domain.models.AppModel;
-import com.example.appmarket.presentation.ui.utils.AppsDiffUtilCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +43,11 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         return apps.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setApps(List<AppModel> newApps) {
-        final AppsDiffUtilCallback diffCallback = new AppsDiffUtilCallback(apps, newApps);
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
         apps.clear();
         apps.addAll(newApps);
-        diffResult.dispatchUpdatesTo(this);
+        notifyDataSetChanged();
     }
 
     public class AppsViewHolder extends RecyclerView.ViewHolder {
