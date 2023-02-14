@@ -6,10 +6,10 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="12dp"
-    android:padding="6dp"
     android:background="?selectableItemBackground"
     android:gravity="center|start"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="6dp">
 
     <TextView
         android:id="@+id/text_count_app"
@@ -31,6 +31,7 @@
             android:id="@+id/image_app_logo"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:contentDescription="@null"
             tools:src="@drawable/ic_launcher_background" />
 
     </com.google.android.material.card.MaterialCardView>

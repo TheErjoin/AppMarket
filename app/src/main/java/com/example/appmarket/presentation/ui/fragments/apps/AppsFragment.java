@@ -1,5 +1,6 @@
 package com.example.appmarket.presentation.ui.fragments.apps;
 
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -41,14 +42,17 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
     private void observeApps() {
         viewModel.fetchApps();
         viewModel.liveData.observe(this, listResource -> {
-            switch (listResource.status) {
+            switch (listResource.statusNetwork) {
                 case SUCCESS:
                     adapter.setApps(listResource.data);
+                    binding.progressApps.setVisibility(View.GONE);
                     break;
                 case ERROR:
                     Toast.makeText(requireContext(), listResource.msg, Toast.LENGTH_SHORT).show();
+                    binding.progressApps.setVisibility(View.GONE);
                     break;
                 case LOADING:
+                    binding.progressApps.setVisibility(View.VISIBLE);
                     break;
             }
         });

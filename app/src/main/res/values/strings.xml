@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AppMarket</string>
+
+    <!--Apps Region-->
+    <string name="canInstalled">Можно установить</string>
+    <string name="installed">Установлено</string>
+    <string name="downloaded">Скачано</string>
+    <string name="haveUpdated">Есть обновление</string>
+    <!--endregion-->
+
 </resources>

@@ -20,8 +20,7 @@ public class AppModel {
             String logo50Link,
             String logo200Link,
             String title,
-            String description,
-            Status status
+            String description
     ) {
         this.link = link;
         this.version = version;
@@ -30,7 +29,6 @@ public class AppModel {
         this.logo200Link = logo200Link;
         this.title = title;
         this.description = description;
-        this.status = status;
     }
 
     public String getLink() {
