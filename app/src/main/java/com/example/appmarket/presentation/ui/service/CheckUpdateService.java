@@ -1,17 +1,12 @@
 package com.example.appmarket.presentation.ui.service;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MediatorLiveData;
 
-import com.example.appmarket.R;
 import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.domain.repository.CheckUpdateServiceRepository;
 
@@ -27,40 +22,21 @@ public class CheckUpdateService extends Service {
     @Inject
     CheckUpdateServiceRepository repository;
 
+    /**
+     * There was a notification, but its meaning was gone, since it was not really needed, it was removed
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        MutableLiveData<AppModel> liveData = new MutableLiveData<>();
+        MediatorLiveData<AppModel> mediatorLiveData = new MediatorLiveData<>();
+
         ArrayList<AppModel> list = new ArrayList<>(repository.installedApp());
         for (AppModel app : list) {
-            repository.fetchLatestVersion(app.getType());
+            mediatorLiveData.addSource(repository.fetchLatestVersion(app.getType()), appModel -> {
+            });
         }
-        liveData.observeForever(this::notificationBuild);
+        mediatorLiveData.observeForever(appModel -> {
+        });
         return START_NOT_STICKY;
-    }
-
-    private void notificationBuild(AppModel appModel) {
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "channelId")
-                .setContentTitle(getString(R.string.search_updates))
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText(appModel.getTitle())
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        int notificationId = 1;
-        createChannel(notificationManager);
-        notificationManager.notify(notificationId, notificationBuilder.build());
-    }
-
-    private void createChannel(NotificationManager notificationManager) {
-        if (Build.VERSION.SDK_INT < 26) {
-            return;
-        }
-        NotificationChannel channel = new NotificationChannel("channelID", "name",
-                NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("");
-        notificationManager.createNotificationChannel(channel);
     }
 
     @Nullable
