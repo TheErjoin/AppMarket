@@ -88,14 +88,14 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
 
     private ArrayList<AppModel> fetchStatus(AppModel model) {
         ArrayList<AppModel> list = new ArrayList<>();
-        if (PackageUtils.hasAppUpdated(model, requireContext())) {
+        if (PackageUtils.isAppUpdated(model, requireContext())) {
             model.setStatus(Status.HAVE_UPDATED);
             list.add(model);
-        } else if (PackageUtils.hasAppInstalled(model.getType(), requireContext())) {
+        } else if (PackageUtils.isAppInstalled(model.getType(), requireContext())) {
             model.setStatus(Status.INSTALLED);
             list.add(model);
             viewModel.fetchInstalledApp(model);
-        } else if (PackageUtils.hasAppDownloaded(model.getType(), requireContext())) {
+        } else if (PackageUtils.isAppDownloaded(model.getType(), requireContext())) {
             model.setStatus(Status.DOWNLOADED);
             list.add(model);
         } else {

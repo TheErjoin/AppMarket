@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.util.Log;
 
 import com.example.appmarket.domain.models.AppModel;
 
@@ -12,20 +13,20 @@ import java.util.Objects;
 
 public class PackageUtils {
 
-    public static boolean hasAppInstalled(String packageName, Context context) {
-        PackageManager packageManager = context.getPackageManager();
+    public static boolean isAppInstalled(String packageName, Context context) {
+        PackageManager pm = context.getPackageManager();
         try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
-            return (packageInfo != null);
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
     }
 
-    public static boolean hasAppDownloaded(String path, Context context) {
+    public static boolean isAppDownloaded(String path, Context context) {
         final PackageManager packageManager = context.getPackageManager();
         File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(directory, path + ".apk");
+        File file = new File(directory, "/" + path + ".apk");
         if (file.exists()) {
             PackageInfo info = packageManager.getPackageArchiveInfo(file.getAbsolutePath(), 0);
             return info != null;
@@ -34,7 +35,7 @@ public class PackageUtils {
         }
     }
 
-    public static boolean hasAppUpdated(AppModel appModel, Context context) {
+    public static boolean isAppUpdated(AppModel appModel, Context context) {
         PackageManager pm = context.getPackageManager();
         try {
             PackageInfo info = pm.getPackageInfo(appModel.getType(), PackageManager.GET_ACTIVITIES);
