@@ -26,20 +26,15 @@ public class CheckUpdateService extends Service {
 
     @Inject
     CheckUpdateServiceRepository repository;
-
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
         MutableLiveData<AppModel> liveData = new MutableLiveData<>();
         ArrayList<AppModel> list = new ArrayList<>(repository.installedApp());
         for (AppModel app : list) {
             repository.fetchLatestVersion(app.getType());
         }
         liveData.observeForever(this::notificationBuild);
-    }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
         return START_NOT_STICKY;
     }
 

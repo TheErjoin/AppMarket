@@ -4,7 +4,7 @@
     <!--Apps Region-->
     <string name="canInstalled">Можно установить</string>
     <string name="installed">Установлено</string>
-    <string name="downloaded">Скачано</string>
+    <string name="downloaded">Установить</string>
     <string name="haveUpdated">Есть обновление</string>
     <string name="downloading">Идёт скачивание</string>
     <string name="permission_denied">Запрос на разрешение отклонен</string>
