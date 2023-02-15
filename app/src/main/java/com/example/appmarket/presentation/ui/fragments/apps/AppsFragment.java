@@ -1,5 +1,6 @@
 package com.example.appmarket.presentation.ui.fragments.apps;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.example.appmarket.common.utils.Status;
 import com.example.appmarket.databinding.FragmentAppsBinding;
 import com.example.appmarket.domain.models.AppModel;
 import com.example.appmarket.presentation.ui.adapters.AppsAdapter;
+import com.example.appmarket.presentation.ui.service.CheckUpdateService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +104,7 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
             model.setStatus(Status.CAN_INSTALLED);
             list.add(model);
         }
+        serviceLaunch();
         return list;
     }
 
@@ -116,6 +119,10 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
         binding.recyclerApps.setAdapter(adapter);
     }
 
+    private void serviceLaunch() {
+        Intent service = new Intent(requireContext(), CheckUpdateService.class);
+        requireContext().startService(service);
+    }
     @Override
     public void onClickItem(AppModel model) {
         navigateSafely(AppsFragmentDirections.Companion.actionAppsFragmentToDetailAppFragment(model));

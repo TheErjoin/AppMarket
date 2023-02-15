@@ -19,11 +19,5 @@ public class MainActivity extends AppCompatActivity {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        serviceLaunch();
-    }
-
-    private void serviceLaunch() {
-        Intent service = new Intent(this, CheckUpdateService.class);
-        startService(service);
     }
 }
