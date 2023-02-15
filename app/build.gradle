@@ -1,5 +1,9 @@
 plugins {
-    alias libs.plugins.android.application
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -18,22 +22,71 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField(
+                    "String",
+                    "BASE_URL",
+                    "\"http://update.paymob.ru:9996/\""
+            )
         }
-        debug{
+        debug {
             applicationIdSuffix = ".debug"
             debuggable = true
+
+            buildConfigField(
+                    "String",
+                    "BASE_URL",
+                    "\"http://update.paymob.ru:9996/\""
+            )
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-    implementation libs.appcompat
+
+    //UI Components
+    implementation libs.appCompat
     implementation libs.material
     implementation libs.constraintLayout
+
+    //Dagger Hilt
+    implementation libs.hiltAndroid
+    kapt libs.hiltCompiler
+
+    //Navigation
+    implementation libs.navigationFragment
+    implementation libs.navigationUi
+
+    //Lifecycle and ViewModel
+    implementation libs.lifecycleViewModel
+    implementation libs.lifecycleLiveData
+    implementation libs.lifecycleRuntime
+
+    //JavaX
+    implementation libs.inject
+
+    //Retrofit
+    implementation libs.retrofit
+    implementation libs.retrofitConvertorGson
+
+    //OkHttp
+    implementation libs.okHttp
+    implementation libs.okHttpBom
+    implementation libs.loggingInterceptor
+
+    //Core
+    implementation libs.core
+    implementation libs.coreSplashScreen
+
+    //Glide
+    implementation libs.glide
 }

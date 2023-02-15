@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">AppMarket</string>
+
+    <!--Apps Region-->
+    <string name="canInstalled">Можно установить</string>
+    <string name="installed">Установлено</string>
+    <string name="downloaded">Скачано но не установлено</string>
+    <string name="haveUpdated">Есть обновление</string>
+    <string name="downloading">Идёт скачивание</string>
+    <string name="permission_denied">Запрос на разрешение отклонен</string>
+    <string name="permission_denied_always">Запрос на разрешение отклонен,дайте доступ на разрешение в настройках</string>
+    <!--endregion-->
+
+    <!--Detail App Region-->
+    <string name="delete">Удалить</string>
+    <string name="openApp">Открыть</string>
+    <!--endregion-->
+
+    <!--Notifications Region-->
+    <string name="search_updates">Поиск обновлений…</string>
+    <string name="notifications_about_available_updates_for_installed_applications">Уведомления о доступных обновлениях для установленных приложений</string>
+    <!--endregion-->
+
 </resources>
