@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.appmarket.App;
 import com.example.appmarket.common.base.BaseFragment;
 import com.example.appmarket.common.utils.PackageUtils;
 import com.example.appmarket.common.utils.Resource;
@@ -56,11 +55,9 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
         observer = listResource -> {
             switch (listResource.statusNetwork) {
                 case SUCCESS:
-                    ArrayList<AppModel> updatedList = new ArrayList<>();
-                    for (AppModel appModel : listResource.data) {
-                        updatedList.addAll(fetchStatus(appModel));
-                    }
+                    ArrayList<AppModel> updatedList = updatedAppList(listResource.data);
                     adapter.setApps(updatedList);
+                    serviceLaunch();
                     binding.progressApps.setVisibility(View.GONE);
                     break;
                 case ERROR:
@@ -77,6 +74,15 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
         viewModel.liveData.observe(this, observer);
     }
 
+    private ArrayList<AppModel> updatedAppList(List<AppModel> data) {
+        ArrayList<AppModel> updatedList = new ArrayList<>();
+        for (AppModel app : data) {
+            List<AppModel> fetchedList = fetchStatus(app);
+            updatedList.addAll(fetchedList);
+        }
+        return updatedList;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -90,16 +96,15 @@ public class AppsFragment extends BaseFragment<FragmentAppsBinding> implements A
             list.add(model);
         } else if (PackageUtils.isAppInstalled(model.getType(), requireContext())) {
             model.setStatus(Status.INSTALLED);
+            viewModel.fetchInstalledApp(model);
             list.add(model);
         } else if (PackageUtils.isAppDownloaded(model.getType(), requireContext())) {
             model.setStatus(Status.DOWNLOADED);
-            viewModel.fetchInstalledApp(model);
             list.add(model);
         } else {
             model.setStatus(Status.CAN_INSTALLED);
             list.add(model);
         }
-        serviceLaunch();
         return list;
     }
 
