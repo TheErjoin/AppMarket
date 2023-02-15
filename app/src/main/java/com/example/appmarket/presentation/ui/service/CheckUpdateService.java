@@ -26,6 +26,7 @@ public class CheckUpdateService extends Service {
 
     @Inject
     CheckUpdateServiceRepository repository;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         MutableLiveData<AppModel> liveData = new MutableLiveData<>();
@@ -34,15 +35,12 @@ public class CheckUpdateService extends Service {
             repository.fetchLatestVersion(app.getType());
         }
         liveData.observeForever(this::notificationBuild);
-
         return START_NOT_STICKY;
     }
 
     private void notificationBuild(AppModel appModel) {
-        String channelId = "app_updates";
-        String channelName = "Application Updates";
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "channelId")
                 .setContentTitle(getString(R.string.search_updates))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentText(appModel.getTitle())
@@ -50,15 +48,19 @@ public class CheckUpdateService extends Service {
                 .setAutoCancel(true);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel.setDescription(getString(R.string.notifications_about_available_updates_for_installed_applications));
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
         int notificationId = 1;
+        createChannel(notificationManager);
         notificationManager.notify(notificationId, notificationBuilder.build());
+    }
+
+    private void createChannel(NotificationManager notificationManager) {
+        if (Build.VERSION.SDK_INT < 26) {
+            return;
+        }
+        NotificationChannel channel = new NotificationChannel("channelID", "name",
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription("");
+        notificationManager.createNotificationChannel(channel);
     }
 
     @Nullable
